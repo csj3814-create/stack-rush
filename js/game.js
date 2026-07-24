@@ -307,6 +307,8 @@
     }
 
     targetCameraY = Math.max(0, (H * 0.72 - blocks[blocks.length - 1].y) - H * 0.38);
+
+    spawnNextBlock();
   }
 
   function showCombo(n) {
@@ -591,10 +593,16 @@
     requestAnimationFrame(loop);
   }
 
-  canvas.addEventListener('pointerdown', (e) => {
+  const app = document.getElementById('app');
+  const soundToggle = document.getElementById('sound-toggle');
+
+  function handleInput(e) {
+    if (soundToggle && (e.target === soundToggle || soundToggle.contains(e.target))) return;
     e.preventDefault();
     handleTap();
-  });
+  }
+
+  app.addEventListener('pointerdown', handleInput);
 
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'Enter') {
