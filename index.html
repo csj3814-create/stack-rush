@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>Stack Rush</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="game"></canvas>
+
+    <div id="hud">
+      <div class="hud-row">
+        <div class="score-box">
+          <span class="label">SCORE</span>
+          <span id="score">0</span>
+        </div>
+        <div class="score-box center">
+          <span class="label">FLOORS</span>
+          <span id="height">0</span>
+        </div>
+        <div class="score-box best">
+          <span class="label">BEST</span>
+          <span id="best">0</span>
+        </div>
+      </div>
+
+      <div class="multiplier-bar">
+        <div id="multiplier-fill" class="multiplier-fill"></div>
+        <span id="multiplier" class="multiplier-label">x1</span>
+      </div>
+
+      <div id="combo" class="combo hidden">PERFECT x<span id="combo-count">1</span></div>
+    </div>
+
+    <button id="sound-toggle" class="sound-toggle muted" type="button" aria-label="Sound off" title="Sound off">🔇</button>
+
+    <div id="milestone-banner" class="milestone hidden"></div>
+
+    <div id="overlay" class="visible">
+      <div class="overlay-content">
+        <h1>Stack Rush</h1>
+        <p class="tagline">Tap to stack. Chase the gold.</p>
+        <div class="pulse-hint">TAP ANYWHERE</div>
+        <p class="sub">Perfect streaks = slow-mo &amp; bonus</p>
+      </div>
+    </div>
+
+    <div id="gameover" class="hidden">
+      <div class="overlay-content">
+        <div id="medal" class="medal" data-label=""></div>
+        <h2>GAME OVER</h2>
+        <p class="final-score"><span id="final-score">0</span></p>
+        <p class="final-stats"><span id="final-height">0</span> floors</p>
+        <p class="new-record hidden" id="new-record">NEW RECORD!</p>
+        <div class="pulse-hint">TAP TO RETRY</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById('sound-toggle');
+      function sync() {
+        var on = GameAudio.isEnabled();
+        btn.textContent = on ? '🔊' : '🔇';
+        btn.classList.toggle('muted', !on);
+        btn.setAttribute('aria-label', on ? 'Sound on' : 'Sound off');
+        btn.title = on ? 'Sound on' : 'Sound off';
+      }
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        GameAudio.toggle();
+        sync();
+      });
+      sync();
+    })();
+  </script>
+</body>
+</html>
